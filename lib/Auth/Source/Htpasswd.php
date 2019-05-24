@@ -9,6 +9,7 @@ namespace SimpleSAML\Module\authcrypt\Auth\Source;
  * @package SimpleSAMLphp
  */
 
+use Webmozart\Assert\Assert;
 use WhiteHat101\Crypt\APR1_MD5;
 
 class Htpasswd extends \SimpleSAML\Module\core\Auth\UserPassBase
@@ -38,8 +39,9 @@ class Htpasswd extends \SimpleSAML\Module\core\Auth\UserPassBase
      */
     public function __construct($info, $config)
     {
-        assert(is_array($info));
-        assert(is_array($config));
+
+        Assert::isArray($info);
+        Assert::isArray($config);
 
         // Call the parent constructor first, as required by the interface
         parent::__construct($info, $config);
@@ -79,8 +81,8 @@ class Htpasswd extends \SimpleSAML\Module\core\Auth\UserPassBase
      */
     protected function login($username, $password)
     {
-        assert(is_string($username));
-        assert(is_string($password));
+        Assert::string($username);
+        Assert::string($password);
 
         foreach ($this->users as $userpass) {
             $matches = explode(':', $userpass, 2);
