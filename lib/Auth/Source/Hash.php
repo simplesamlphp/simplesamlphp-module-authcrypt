@@ -2,6 +2,10 @@
 
 namespace SimpleSAML\Module\authcrypt\Auth\Source;
 
+use SimpleSAML\Logger;
+use SimpleSAML\Utils\Attributes;
+use SimpleSAML\Utils\Crypto;
+
 /**
  * Authentication source for username & hashed password.
  *
@@ -55,7 +59,7 @@ class Hash extends \SimpleSAML\Module\core\Auth\UserPassBase
             $passwordhash = $userpass[1];
 
             try {
-                $attributes = \SimpleSAML\Utils\Attributes::normalizeAttributesArray($attributes);
+                $attributes = Attributes::normalizeAttributesArray($attributes);
             } catch (\Exception $e) {
                 throw new \Exception('Invalid attributes for user '.$username.
                     ' in authentication source '.$this->authId.': '.
@@ -91,10 +95,10 @@ class Hash extends \SimpleSAML\Module\core\Auth\UserPassBase
         foreach ($this->users as $userpass => $attrs) {
             $matches = explode(':', $userpass, 2);
             if ($matches[0] === $username) {
-                if (\SimpleSAML\Utils\Crypto::pwValid($matches[1], $password)) {
+                if (Crypto::pwValid($matches[1], $password)) {
                     return $attrs;
                 } else {
-                    \SimpleSAML\Logger::debug('Incorrect password "'.$password.'" for user '.$username);
+                    Logger::debug('Incorrect password "'.$password.'" for user '.$username);
                 }
             }
         }
