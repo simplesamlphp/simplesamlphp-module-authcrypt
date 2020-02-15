@@ -2,6 +2,7 @@
 
 namespace SimpleSAML\Module\authcrypt\Auth\Source;
 
+use Exception;
 use SimpleSAML\Logger;
 use SimpleSAML\Utils\Attributes;
 use SimpleSAML\Utils\Crypto;
@@ -22,6 +23,8 @@ class Hash extends \SimpleSAML\Module\core\Auth\UserPassBase
     /**
      * Our users, stored in an associative array. The key of the array is "<username>:<passwordhash>",
      * while the value of each element is a new array with the attributes for each user.
+     *
+     * @var array
      */
     private $users;
 
@@ -32,13 +35,10 @@ class Hash extends \SimpleSAML\Module\core\Auth\UserPassBase
      * @param array $info Information about this authentication source.
      * @param array $config Configuration.
      *
-     * @throws Exception in case of a configuration error.
+     * @throws \Exception in case of a configuration error.
      */
-    public function __construct($info, $config)
+    public function __construct(array $info, array $config)
     {
-        Assert::isArray($info);
-        Assert::isArray($config);
-
         // Call the parent constructor first, as required by the interface
         parent::__construct($info, $config);
 
@@ -47,27 +47,27 @@ class Hash extends \SimpleSAML\Module\core\Auth\UserPassBase
         // Validate and parse our configuration
         foreach ($config as $userpass => $attributes) {
             if (!is_string($userpass)) {
-                throw new \Exception('Invalid <username>:<passwordhash> for authentication source '.
-                    $this->authId.': '.$userpass);
+                throw new Exception('Invalid <username>:<passwordhash> for authentication source ' .
+                    $this->authId . ': ' . $userpass);
             }
 
             $userpass = explode(':', $userpass, 2);
             if (count($userpass) !== 2) {
-                throw new \Exception('Invalid <username>:<passwordhash> for authentication source '.
-                    $this->authId.': '.$userpass[0]);
+                throw new Exception('Invalid <username>:<passwordhash> for authentication source ' .
+                    $this->authId . ': ' . $userpass[0]);
             }
             $username = $userpass[0];
             $passwordhash = $userpass[1];
 
             try {
                 $attributes = Attributes::normalizeAttributesArray($attributes);
-            } catch (\Exception $e) {
-                throw new \Exception('Invalid attributes for user '.$username.
-                    ' in authentication source '.$this->authId.': '.
+            } catch (Exception $e) {
+                throw new Exception('Invalid attributes for user ' . $username .
+                    ' in authentication source ' . $this->authId . ': ' .
                     $e->getMessage());
             }
 
-            $this->users[$username.':'.$passwordhash] = $attributes;
+            $this->users[$username . ':' . $passwordhash] = $attributes;
         }
     }
 
@@ -88,18 +88,15 @@ class Hash extends \SimpleSAML\Module\core\Auth\UserPassBase
      *
      * @throws \SimpleSAML\Error\Error if authentication fails.
      */
-    protected function login($username, $password)
+    protected function login(string $username, string $password): array
     {
-        Assert::string($username);
-        Assert::string($password);
-
         foreach ($this->users as $userpass => $attrs) {
             $matches = explode(':', $userpass, 2);
             if ($matches[0] === $username) {
                 if (Crypto::pwValid($matches[1], $password)) {
                     return $attrs;
                 } else {
-                    Logger::debug('Incorrect password "'.$password.'" for user '.$username);
+                    Logger::debug('Incorrect password "' . $password . '" for user ' . $username);
                 }
             }
         }

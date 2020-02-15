@@ -1,7 +1,5 @@
 <?php
 
-namespace SimpleSAML\Module\authcrypt\Auth\Source;
-
 /**
  * Authentication source for Apache 'htpasswd' files.
  *
@@ -9,6 +7,9 @@ namespace SimpleSAML\Module\authcrypt\Auth\Source;
  * @package SimpleSAMLphp
  */
 
+namespace SimpleSAML\Module\authcrypt\Auth\Source;
+
+use Exception;
 use SimpleSAML\Logger;
 use SimpleSAML\Utils\Attributes;
 use SimpleSAML\Utils\Crypto;
@@ -38,30 +39,26 @@ class Htpasswd extends \SimpleSAML\Module\core\Auth\UserPassBase
      * @param array $info Information about this authentication source.
      * @param array $config Configuration.
      *
-     * @throws Exception if the htpasswd file is not readable or the static_attributes array is invalid.
+     * @throws \Exception if the htpasswd file is not readable or the static_attributes array is invalid.
      */
-    public function __construct($info, $config)
+    public function __construct(array $info, array $config)
     {
-
-        Assert::isArray($info);
-        Assert::isArray($config);
-
         // Call the parent constructor first, as required by the interface
         parent::__construct($info, $config);
 
         $this->users = [];
 
         if (!$htpasswd = file_get_contents($config['htpasswd_file'])) {
-            throw new \Exception('Could not read '.$config['htpasswd_file']);
+            throw new Exception('Could not read ' . $config['htpasswd_file']);
         }
 
         $this->users = explode("\n", trim($htpasswd));
 
         try {
             $this->attributes = Attributes::normalizeAttributesArray($config['static_attributes']);
-        } catch (\Exception $e) {
-            throw new \Exception('Invalid static_attributes in authentication source '.
-                $this->authId.': '.$e->getMessage());
+        } catch (Exception $e) {
+            throw new Exception('Invalid static_attributes in authentication source ' .
+                $this->authId . ': ' . $e->getMessage());
         }
     }
 
@@ -82,11 +79,8 @@ class Htpasswd extends \SimpleSAML\Module\core\Auth\UserPassBase
      *
      * @throws \SimpleSAML\Error\Error if authentication fails.
      */
-    protected function login($username, $password)
+    protected function login(string $username, string $password): array
     {
-        Assert::string($username);
-        Assert::string($password);
-
         foreach ($this->users as $userpass) {
             $matches = explode(':', $userpass, 2);
             if ($matches[0] == $username) {
@@ -97,7 +91,7 @@ class Htpasswd extends \SimpleSAML\Module\core\Auth\UserPassBase
 
                 // Traditional crypt(3)
                 if (Crypto::secureCompare($crypted, crypt($password, $crypted))) {
-                    Logger::debug('User '.$username.' authenticated successfully');
+                    Logger::debug('User ' . $username . ' authenticated successfully');
                     Logger::warning(
                         'CRYPT authentication is insecure. Please consider using something else.'
                     );
@@ -106,13 +100,13 @@ class Htpasswd extends \SimpleSAML\Module\core\Auth\UserPassBase
 
                 // Apache's custom MD5
                 if (APR1_MD5::check($password, $crypted)) {
-                    Logger::debug('User '.$username.' authenticated successfully');
+                    Logger::debug('User ' . $username . ' authenticated successfully');
                     return $attributes;
                 }
 
                 // PASSWORD_BCRYPT
                 if (Crypto::pwValid($crypted, $password)) {
-                    Logger::debug('User '.$username.' authenticated successfully');
+                    Logger::debug('User ' . $username . ' authenticated successfully');
                     return $attributes;
                 }
                 throw new \SimpleSAML\Error\Error('WRONGUSERPASS');
