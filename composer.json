@@ -29,7 +29,8 @@
     "require": {
         "php": ">=5.6",
         "simplesamlphp/composer-module-installer": "~1.1",
-        "webmozart/assert": "~1.4 <1.7"
+        "webmozart/assert": "~1.4 <1.7",
+        "whitehat101/apr1-md5": "~1.0"
     },
     "require-dev": {
         "simplesamlphp/simplesamlphp": "^1.17",
