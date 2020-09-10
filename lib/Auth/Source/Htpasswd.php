@@ -3,7 +3,6 @@
 /**
  * Authentication source for Apache 'htpasswd' files.
  *
- * @author Dyonisius (Dick) Visser, TERENA.
  * @package SimpleSAMLphp
  */
 

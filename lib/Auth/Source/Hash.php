@@ -14,7 +14,6 @@ use Webmozart\Assert\Assert;
  * This class is an authentication source which stores all username/hashes in an array,
  * and authenticates users against this array.
  *
- * @author Dyonisius Visser, TERENA.
  * @package SimpleSAMLphp
  */
 
