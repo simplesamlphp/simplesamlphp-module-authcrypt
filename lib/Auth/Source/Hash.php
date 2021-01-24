@@ -3,10 +3,10 @@
 namespace SimpleSAML\Module\authcrypt\Auth\Source;
 
 use Exception;
+use SimpleSAML\Assert\Assert;
 use SimpleSAML\Logger;
 use SimpleSAML\Utils\Attributes;
 use SimpleSAML\Utils\Crypto;
-use Webmozart\Assert\Assert;
 
 /**
  * Authentication source for username & hashed password.
