@@ -25,7 +25,7 @@ class Hash extends \SimpleSAML\Module\core\Auth\UserPassBase
      *
      * @var array
      */
-    private $users;
+    private array $users;
 
 
     /**

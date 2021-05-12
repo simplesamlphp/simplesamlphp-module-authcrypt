@@ -22,14 +22,14 @@ class Htpasswd extends \SimpleSAML\Module\core\Auth\UserPassBase
      *
      * @var array
      */
-    private $users;
+    private array $users;
 
     /**
      * An array containing static attributes for our users.
      *
      * @var array
      */
-    private $attributes = [];
+    private array $attributes = [];
 
 
     /**
