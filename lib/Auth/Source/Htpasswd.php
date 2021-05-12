@@ -10,9 +10,9 @@ namespace SimpleSAML\Module\authcrypt\Auth\Source;
 
 use Exception;
 use SimpleSAML\Assert\Assert;
+use SimpleSAML\Error;
 use SimpleSAML\Logger;
-use SimpleSAML\Utils\Attributes;
-use SimpleSAML\Utils\Crypto;
+use SimpleSAML\Utils;
 use WhiteHat101\Crypt\APR1_MD5;
 
 class Htpasswd extends \SimpleSAML\Module\core\Auth\UserPassBase
@@ -54,7 +54,8 @@ class Htpasswd extends \SimpleSAML\Module\core\Auth\UserPassBase
         $this->users = explode("\n", trim($htpasswd));
 
         try {
-            $this->attributes = Attributes::normalizeAttributesArray($config['static_attributes']);
+            $attrUtils = new Utils\Attributes();
+            $this->attributes = $attrUtils->normalizeAttributesArray($config['static_attributes']);
         } catch (Exception $e) {
             throw new Exception('Invalid static_attributes in authentication source ' .
                 $this->authId . ': ' . $e->getMessage());
@@ -80,6 +81,7 @@ class Htpasswd extends \SimpleSAML\Module\core\Auth\UserPassBase
      */
     protected function login(string $username, string $password): array
     {
+        $cryptoUtils = new Utils\Crypto();
         foreach ($this->users as $userpass) {
             $matches = explode(':', $userpass, 2);
             if ($matches[0] == $username) {
@@ -89,7 +91,7 @@ class Htpasswd extends \SimpleSAML\Module\core\Auth\UserPassBase
                 $attributes = array_merge(['uid' => [$username]], $this->attributes);
 
                 // Traditional crypt(3)
-                if (Crypto::secureCompare($crypted, crypt($password, $crypted))) {
+                if ($cryptoUtils->secureCompare($crypted, crypt($password, $crypted))) {
                     Logger::debug('User ' . $username . ' authenticated successfully');
                     Logger::warning(
                         'CRYPT authentication is insecure. Please consider using something else.'
@@ -104,13 +106,13 @@ class Htpasswd extends \SimpleSAML\Module\core\Auth\UserPassBase
                 }
 
                 // PASSWORD_BCRYPT
-                if (Crypto::pwValid($crypted, $password)) {
+                if ($cryptoUtils->pwValid($crypted, $password)) {
                     Logger::debug('User ' . $username . ' authenticated successfully');
                     return $attributes;
                 }
-                throw new \SimpleSAML\Error\Error('WRONGUSERPASS');
+                throw new Error\Error('WRONGUSERPASS');
             }
         }
-        throw new \SimpleSAML\Error\Error('WRONGUSERPASS');
+        throw new Error\Error('WRONGUSERPASS');
     }
 }
