@@ -20,6 +20,6 @@ Next thing you need to do is to enable the module:
 
 in `config.php`, search for the `module.enable` key and set `authcrypt` to true:
 
- ```php
-     'module.enable' => [ 'authcrypt' => true, … ],
- ```
+```php
+'module.enable' => [ 'authcrypt' => true, … ],
+```
