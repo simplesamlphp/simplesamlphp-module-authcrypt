@@ -102,6 +102,9 @@ class Htpasswd extends \SimpleSAML\Module\core\Auth\UserPassBase
                 // Apache's custom MD5
                 if (APR1_MD5::check($password, $crypted)) {
                     Logger::debug('User ' . $username . ' authenticated successfully');
+                    Logger::warning(
+                        'APR1 authentication is insecure. Please consider using something else.'
+                    );
                     return $attributes;
                 }
 
