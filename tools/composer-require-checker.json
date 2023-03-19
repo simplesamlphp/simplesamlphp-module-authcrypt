@@ -1,0 +1,9 @@
+{
+  "symbol-whitelist": [
+    "SimpleSAML\\Error\\Error",
+    "SimpleSAML\\Logger",
+    "SimpleSAML\\Module\\core\\Auth\\UserPassBase",
+    "SimpleSAML\\Utils\\Attributes",
+    "SimpleSAML\\Utils\\Crypto"
+  ]
+}
