@@ -6,9 +6,7 @@ namespace SimpleSAML\Module\authcrypt\Auth\Source;
 
 use Exception;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\Error;
-use SimpleSAML\Logger;
-use SimpleSAML\Utils;
+use SimpleSAML\{Error, Logger, Utils};
 
 /**
  * Authentication source for username & hashed password.

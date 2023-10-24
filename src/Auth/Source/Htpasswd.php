@@ -12,9 +12,7 @@ namespace SimpleSAML\Module\authcrypt\Auth\Source;
 
 use Exception;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\Error;
-use SimpleSAML\Logger;
-use SimpleSAML\Utils;
+use SimpleSAML\{Error, Logger, Utils};
 use WhiteHat101\Crypt\APR1_MD5;
 
 class Htpasswd extends \SimpleSAML\Module\core\Auth\UserPassBase
