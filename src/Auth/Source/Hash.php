@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace SimpleSAML\Module\authcrypt\Auth\Source;
 
 use Exception;
-use SimpleSAML\Assert\Assert;
 use SimpleSAML\{Error, Logger, Utils};
+use SimpleSAML\Module\core\Auth\UserPassBase;
+
+use function explode;
+use function is_string;
 
 /**
  * Authentication source for username & hashed password.
@@ -17,7 +20,7 @@ use SimpleSAML\{Error, Logger, Utils};
  * @package SimpleSAMLphp
  */
 
-class Hash extends \SimpleSAML\Module\core\Auth\UserPassBase
+class Hash extends UserPassBase
 {
     /**
      * Our users, stored in an associative array. The key of the array is "<username>:<passwordhash>",

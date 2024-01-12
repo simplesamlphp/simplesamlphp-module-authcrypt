@@ -11,11 +11,17 @@ declare(strict_types=1);
 namespace SimpleSAML\Module\authcrypt\Auth\Source;
 
 use Exception;
-use SimpleSAML\Assert\Assert;
 use SimpleSAML\{Error, Logger, Utils};
+use SimpleSAML\Module\core\Auth\UserPassBase;
 use WhiteHat101\Crypt\APR1_MD5;
 
-class Htpasswd extends \SimpleSAML\Module\core\Auth\UserPassBase
+use function array_merge;
+use function crypt;
+use function explode;
+use function file_get_contents;
+use function trim;
+
+class Htpasswd extends UserPassBase
 {
     /**
      * Our users, stored in an array, where each value is "<username>:<passwordhash>".
