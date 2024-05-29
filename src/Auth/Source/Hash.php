@@ -91,8 +91,11 @@ class Hash extends UserPassBase
      *
      * @throws \SimpleSAML\Error\Error if authentication fails.
      */
-    protected function login(string $username, string $password): array
-    {
+    protected function login(
+        string $username,
+        #[\SensitiveParameter]
+        string $password,
+    ): array {
         $cryptoUtils = new Utils\Crypto();
         foreach ($this->users as $userpass => $attrs) {
             $matches = explode(':', $userpass, 2);
