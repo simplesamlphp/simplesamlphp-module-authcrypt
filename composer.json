@@ -18,6 +18,7 @@
         "allow-plugins": {
             "composer/package-versions-deprecated": true,
             "simplesamlphp/composer-module-installer": true,
+            "phpstan/extension-installer": true,
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
