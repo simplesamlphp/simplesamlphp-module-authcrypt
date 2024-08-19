@@ -103,7 +103,7 @@ class Htpasswd extends UserPassBase
                 if ($cryptoUtils->secureCompare($crypted, crypt($password, $crypted))) {
                     Logger::debug('User ' . $username . ' authenticated successfully');
                     Logger::warning(
-                        'CRYPT authentication is insecure. Please consider using something else.'
+                        'CRYPT authentication is insecure. Please consider using something else.',
                     );
                     return $attributes;
                 }
@@ -112,7 +112,7 @@ class Htpasswd extends UserPassBase
                 if (APR1_MD5::check($password, $crypted)) {
                     Logger::debug('User ' . $username . ' authenticated successfully');
                     Logger::warning(
-                        'APR1 authentication is insecure. Please consider using something else.'
+                        'APR1 authentication is insecure. Please consider using something else.',
                     );
                     return $attributes;
                 }
