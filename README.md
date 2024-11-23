@@ -11,7 +11,7 @@
 Install with composer
 
 ```bash
-vendor/bin/composer require simplesamlphp/simplesamlphp-module-authcrypt
+bin/composer require simplesamlphp/simplesamlphp-module-authcrypt
 ```
 
 ## Configuration
