@@ -26,7 +26,7 @@ class Hash extends UserPassBase
      * Our users, stored in an associative array. The key of the array is "<username>:<passwordhash>",
      * while the value of each element is a new array with the attributes for each user.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     private array $users;
 
@@ -34,8 +34,8 @@ class Hash extends UserPassBase
     /**
      * Constructor for this authentication source.
      *
-     * @param array $info Information about this authentication source.
-     * @param array $config Configuration.
+     * @param array<string, mixed> $info Information about this authentication source.
+     * @param array<string, mixed> $config Configuration.
      *
      * @throws \Exception in case of a configuration error.
      */
@@ -87,7 +87,7 @@ class Hash extends UserPassBase
      * @param string $username The username the user wrote.
      * @param string $password The password the user wrote.
      *
-     * @return array  Associative array with the users attributes.
+     * @return array<string, mixed> Associative array with the users attributes.
      *
      * @throws \SimpleSAML\Error\Error if authentication fails.
      */
