@@ -26,14 +26,14 @@ class Htpasswd extends UserPassBase
     /**
      * Our users, stored in an array, where each value is "<username>:<passwordhash>".
      *
-     * @var array
+     * @var array<int, mixed>
      */
     private array $users;
 
     /**
      * An array containing static attributes for our users.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     private array $attributes = [];
 
@@ -41,8 +41,8 @@ class Htpasswd extends UserPassBase
     /**
      * Constructor for this authentication source.
      *
-     * @param array $info Information about this authentication source.
-     * @param array $config Configuration.
+     * @param array<string, mixed> $info Information about this authentication source.
+     * @param array<string, mixed> $config Configuration.
      *
      * @throws \Exception if the htpasswd file is not readable or the static_attributes array is invalid.
      */
@@ -81,7 +81,7 @@ class Htpasswd extends UserPassBase
      * @param string $username The username the user wrote.
      * @param string $password The password the user wrote.
      *
-     * @return array Associative array with the users attributes.
+     * @return array<string, mixed> Associative array with the users attributes.
      *
      * @throws \SimpleSAML\Error\Error if authentication fails.
      */
