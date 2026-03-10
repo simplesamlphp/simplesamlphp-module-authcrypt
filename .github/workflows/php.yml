@@ -117,7 +117,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
           extensions: ctype, date, dom, fileinfo, filter, hash, intl, mbstring, openssl,\
-            pcre, posix, session, sodium, spl, xml
+            pcre, posix, session, sodium, spl, xml, zip
           tools: composer
           ini-values: error_reporting=E_ALL
           coverage: none
