@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace SimpleSAML\Module\authcrypt\Auth\Source;
 
 use Exception;
-use SimpleSAML\{Error, Logger, Utils};
+use SimpleSAML\Error;
+use SimpleSAML\Logger;
 use SimpleSAML\Module\core\Auth\UserPassBase;
+use SimpleSAML\Utils;
 
 use function explode;
 use function is_string;

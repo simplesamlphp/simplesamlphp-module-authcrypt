@@ -11,8 +11,10 @@ declare(strict_types=1);
 namespace SimpleSAML\Module\authcrypt\Auth\Source;
 
 use Exception;
-use SimpleSAML\{Error, Logger, Utils};
+use SimpleSAML\Error;
+use SimpleSAML\Logger;
 use SimpleSAML\Module\core\Auth\UserPassBase;
+use SimpleSAML\Utils;
 use WhiteHat101\Crypt\APR1_MD5;
 
 use function array_merge;
