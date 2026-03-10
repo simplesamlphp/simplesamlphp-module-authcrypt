@@ -34,14 +34,14 @@
         }
     },
     "require": {
-        "php": "^8.1",
+        "php": "^8.3",
 
-        "simplesamlphp/assert": "^1.0",
-        "simplesamlphp/simplesamlphp": "^2.1",
+        "simplesamlphp/assert": "^2.0",
+        "simplesamlphp/simplesamlphp": "^2.5@dev",
         "whitehat101/apr1-md5": "~1.0"
     },
     "require-dev": {
-        "simplesamlphp/simplesamlphp-test-framework": "^1.5"
+        "simplesamlphp/simplesamlphp-test-framework": "^1.11"
     },
     "support": {
         "issues": "https://github.com/simplesamlphp/simplesamlphp-module-authcrypt/issues",
